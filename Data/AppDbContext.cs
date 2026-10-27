@@ -1,0 +1,23 @@
+﻿using Mango.Services.RewardAPI.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Mango.Services.RewardAPI.Data
+{
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Rewards> Rewards { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Rewards>()
+                .HasIndex(reward => reward.OrderId)
+                .IsUnique();
+
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+}
